@@ -14,8 +14,9 @@ fi
 # Allocators and tests
 # --------------------------------------------------------------------
 
-readonly alloc_all="sys dh ff gd hd hm hml iso je mi mi-sec mng mesh nomesh rp sc scudo sg sm sn sn-sec tbb tc tcg dmi xmi xsmi xdmi"
-readonly alloc_secure="dh ff gd hm hml iso mi-sec mng scudo sg sn-sec sg"
+# ADDED
+readonly alloc_all="sys dh ff gd hd hm hml iso je mi mi-sec mng mesh nomesh rp sc scudo sg sm sn sn-sec tbb tc tcg dmi xmi xsmi xdmi ota"
+readonly alloc_secure="dh ff gd hm hml iso mi-sec mng scudo sg sn-sec sg ota"
 alloc_run=""           # allocators to run (expanded by command line options)
 alloc_installed="sys"  # later expanded to include all installed allocators
 alloc_libs="sys="      # mapping from allocator to its .so as "<allocator>=<sofile> ..."
@@ -128,6 +129,9 @@ alloc_lib_add "mi-dbg"    "$localdevdir/mimalloc/out/debug/libmimalloc-debug$ext
 alloc_lib_add "xmi"    "$localdevdir/../../mimalloc/out/release/libmimalloc$extso"
 alloc_lib_add "xmi-sec"   "$localdevdir/../../mimalloc/out/secure/libmimalloc-secure$extso"
 alloc_lib_add "xmi-dbg"   "$localdevdir/../../mimalloc/out/debug/libmimalloc-debug$extso"
+
+#ADDED
+alloc_lib_add "ota"     "$localdevdir/ota/libota_allocator$extso"
 
 if test "$use_packages" = "1"; then
   if test -f "/usr/lib/libtcmalloc$extso"; then

@@ -53,6 +53,9 @@ readonly version_tbb=3a7f96d  # v2021.5.0 + a fix for musl
 readonly version_tc=gperftools-2.9.1
 readonly version_tcg=0fdd7dce282523ed7f76849edf37d6a97eda007e
 
+# ADDED 
+readonly version_ota=mimalloc-bench-integration
+
 # benchmark versions
 readonly version_redis=6.2.6
 readonly version_lean=v3.4.2
@@ -78,6 +81,9 @@ setup_sn=0
 setup_tbb=0
 setup_tc=0
 setup_tcg=0
+
+# ADDED
+setup_ota=0
 
 # bigger benchmarks
 setup_bench=0
@@ -115,6 +121,10 @@ while : ; do
         setup_sg=$flag_arg
         setup_tbb=$flag_arg
         setup_tc=$flag_arg
+
+        # ADDED
+        setup_ota=$flag_arg
+
         if [ -z "$darwin" ]; then
           setup_tcg=$flag_arg       # lacking 'malloc.h'
           setup_dh=$flag_arg        
@@ -188,6 +198,12 @@ while : ; do
         setup_tc=$flag_arg;;
     tcg)
         setup_tcg=$flag_arg;;
+
+    # ADDED
+
+    ota)
+        setup_ota=$flag_arg;;
+
     -r|--rebuild)
         rebuild=1;;
     -j=*|--procs=*)
@@ -411,6 +427,15 @@ fi
 if test "$setup_ff" = "1"; then
   checkout ff $version_ff ff https://github.com/bwickman97/ffmalloc
   make -j $procs
+  popd
+fi
+
+# ADDED
+
+if test "$setup_ota" = "1"; then
+  checkout ota $version_ota ota git@github.com:UrsuDanAndrei/ota-allocator.git
+  RUSTFLAGS="-C target-cpu=native" cargo build --release
+  cp target/release/libota_allocator.so .
   popd
 fi
 
