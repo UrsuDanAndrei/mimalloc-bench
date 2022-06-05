@@ -642,6 +642,7 @@ if test "$setup_lean" = "1"; then
   mkdir -p out/release
   cd out/release
   env CC=gcc CXX="g++" cmake ../../src -DCUSTOM_ALLOCATORS=OFF -DLEAN_EXTRA_CXX_FLAGS="-w"
+  # env CFLAGS="-g" CXXFLAGS="-g" CC=gcc CXX="g++" cmake ../../src -DCUSTOM_ALLOCATORS=OFF -DLEAN_EXTRA_CXX_FLAGS="-w"
   echo "make -j$procs"
   make -j $procs
   popd
